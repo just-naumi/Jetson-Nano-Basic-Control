@@ -1,45 +1,73 @@
-# Jetson-Nano-Basic-Control-
+# 🚀 Jetson Nano Basic Hardware Control
 
-Repository ini berisi kumpulan script Python untuk mengontrol dan membaca berbagai sensor serta aktuator dasar menggunakan **NVIDIA Jetson Nano**. Script ini menggunakan library `Jetson.GPIO` dengan mode penomoran pin fisik (`BOARD`).
+Kumpulan script Python dasar untuk mengontrol berbagai komponen hardware menggunakan **NVIDIA Jetson Nano**. Repositori ini dirancang untuk memudahkan pemula dalam mempelajari antarmuka GPIO pada Jetson Nano.
 
-## 📋 Daftar Komponen & Script
+## 🛠️ Komponen yang Didukung
 
-Berikut adalah script kontrol dasar yang tersedia:
+Repositori ini mencakup contoh kode untuk berbagai sensor dan aktuator:
 
-### ⚙️ Aktuator (Output)
-- **`LED.py`**: Mengontrol nyala/mati lampu LED.
-- **`MotorDC.py`**: Mengontrol kecepatan dan arah putaran Motor DC.
-- **`MotorServo.py`**: Mengontrol sudut putaran Motor Servo.
-- **`StepperMotor.py`**: Mengontrol putaran langkah presisi pada Motor Stepper.
-- **`SevenSegment.py`**: Menampilkan angka/karakter pada layar 7-Segment.
+### 🎮 Aktuator & Output
+- **Motor DC**: Kontrol kecepatan (PWM) dan arah menggunakan driver motor.
+- **Motor Servo**: Kendali posisi sudut servo.
+- **Stepper Motor**: Kontrol langkah presisi untuk motor stepper.
+- **Seven Segment**: Menampilkan angka pada display 7-segment.
+- **LED**: Kontrol dasar ON/OFF pada lampu LED.
 
-### 📡 Sensor (Input)
-- **`PushButton.py`**: Membaca input status dari tombol (Push Button).
-- **`Keypad.py`**: Membaca input matrix dari modul Keypad.
-- **`SensorInfrared.py`**: Membaca data digital/jarak dekat dari sensor Infrared (IR).
-- **`SensorLDR.py`**: Membaca intensitas cahaya dari modul sensor LDR (Light Dependent Resistor).
-- **`SensorPir.py`**: Mendeteksi pergerakan objek (Motion Detection) menggunakan sensor PIR.
-- **`SensorUltrasonic.py`**: Mengukur jarak dengan presisi menggunakan sensor gelombang ultrasonik (seperti tipe HC-SR04).
+### 📡 Sensor & Input
+- **Sensor Ultrasonic**: Mengukur jarak objek (HC-SR04).
+- **Sensor PIR**: Deteksi gerakan manusia.
+- **Sensor LDR**: Deteksi intensitas cahaya (analog/digital).
+- **Sensor Infrared**: Deteksi halangan atau garis.
+- **Keypad**: Input matriks tombol.
+- **Push Button**: Input digital dari tombol tekan.
 
-## 🛠️ Persyaratan (Requirements)
-Pastikan Jetson Nano anda sudah diatur dan terinstall library `Jetson.GPIO`. Anda bisa menginstallnya dengan perintah:
+---
+
+## ⚙️ Persiapan Sistem
+
+Sebelum menjalankan script, pastikan library `Jetson.GPIO` sudah terinstall di Jetson Nano anda:
+
 ```bash
 sudo pip3 install Jetson.GPIO
 ```
 
-## 🚀 Cara Menjalankan
-1. Clone repository ini ke dalam environment Jetson Nano anda:
+Pastikan user anda memiliki izin untuk mengakses GPIO:
+```bash
+sudo groupadd -f -r gpio
+sudo usermod -a -G gpio your_username
+```
+*(Ganti `your_username` dengan nama user anda, lalu restart Jetson Nano).*
+
+---
+
+## 🚀 Cara Penggunaan
+
+1. Clone repositori ini:
    ```bash
    git clone https://github.com/just-naumi/Jetson-Nano-Basic-Control-.git
    cd Jetson-Nano-Basic-Control-
    ```
-2. Sambungkan komponen hardware ke pin Jetson Nano (silakan cek angka pin di masing-masing file Python, biasanya tertulis di bagian `Definisi Pin`).
-3. Jalankan script yang ingin diuji menggunakan Python 3. Contoh:
-   ```bash
-   python3 SensorUltrasonic.py
-   ```
-   *(Tekan `Ctrl+C` di terminal untuk menghentikan program dengan aman dan membersihkan GPIO)*
 
-## ⚠️ Catatan
-- Selalu pastikan rangkaian tegangan aman (Jetson Nano sebagian besar beroperasi dengan logika 3.3V, hati-hati jika menggunakan sensor 5V, mungkin butuh logic level converter).
-- Script ini berjalan di atas mode `GPIO.BOARD` (nomor urut pin fisik di papan board).
+2. Jalankan salah satu script (contoh: Motor DC):
+   ```bash
+   python3 MotorDC.py
+   ```
+
+---
+
+## 📂 Struktur File
+
+Setiap file `.py` bersifat mandiri (*standalone*) dan sudah mencakup inisialisasi pin serta logic dasar penggunaan komponen.
+
+- `MotorDC.py`: Kontrol driver motor L298N/sejenis.
+- `SensorUltrasonic.py`: Pembacaan jarak dalam cm.
+- `Keypad.py`: Pembacaan input 4x4 atau 4x3.
+- ... dan file lainnya sesuai nama komponennya.
+
+---
+
+## 📝 Catatan
+Script ini menggunakan mode penomoran pin **GPIO.BOARD**. Pastikan kabel jumper anda terpasang sesuai dengan nomor pin fisik pada header 40-pin Jetson Nano.
+
+---
+**Author:** [just_naumi](https://github.com/just-naumi)
